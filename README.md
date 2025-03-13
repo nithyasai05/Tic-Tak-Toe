@@ -36,13 +36,13 @@ This project implements the Tic Tac Toe game in **C**, providing a console-based
 ## 🖼️ Game Board Example
 ```
      |     |     
-     |     |     
+   1 |  2  | 3   
 _____|_____|_____
      |     |     
-     |     |     
+   4 |  5  | 6  
 _____|_____|_____
      |     |     
-     |     |     
+   7 |  8  | 9   
      |     |     
 ```
 
