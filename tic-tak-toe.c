@@ -1,47 +1,56 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char square[10] = {'o', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+char square[10];
 int checkWin();
 void drawBoard();
+void resetBoard();
 
 int main() {
-    int player = 1, i, choice;
-    char mark;
-
+    char playAgain;
+    
     do {
-        drawBoard();
-        player = (player % 2) ? 1 : 2;
-        printf("Player %d, enter your choice: ", player);
+        resetBoard();
+        int player = 1, i, choice;
+        char mark;
         
-        if (scanf("%d", &choice) != 1) {
-            printf("Invalid input! Please enter a number between 1 and 9.\n");
-            while (getchar() != '\n'); 
-            continue;
-        }
+        do {
+            drawBoard();
+            player = (player % 2) ? 1 : 2;
+            printf("Player %d, enter your choice: ", player);
+            
+            if (scanf("%d", &choice) != 1) {
+                printf("Invalid input! Please enter a number between 1 and 9.\n");
+                while (getchar() != '\n');
+                continue;
+            }
 
-        mark = (player == 1) ? 'X' : 'O';
+            mark = (player == 1) ? 'X' : 'O';
 
-        if (choice >= 1 && choice <= 9 && square[choice] == ('0' + choice)) {
-            square[choice] = mark;
+            if (choice >= 1 && choice <= 9 && square[choice] == ('0' + choice)) {
+                square[choice] = mark;
+            } else {
+                printf("Invalid move! Try again.\n");
+                continue;
+            }
+
+            i = checkWin();
+            player++;
+
+        } while (i == -1);
+
+        drawBoard();
+        if (i == 1) {
+            printf("==> Player %d won!\n", --player);
         } else {
-            printf("Invalid move! Try again.\n");
-            continue;
+            printf("==> Game draw!\n");
         }
-
-        i = checkWin();
-        player++;
-
-    } while (i == -1);
-
-    drawBoard();
-    if (i == 1) {
-        printf("==> Player %d won!\n", --player);
-    } else {
-        printf("==> Game draw!\n");
-    }
-
-    system("pause");
+        
+        printf("Do you want to play again? (y/n): ");
+        scanf(" %c", &playAgain);
+        
+    } while (playAgain == 'y' || playAgain == 'Y');
+    
     return 0;
 }
 
@@ -75,4 +84,11 @@ void drawBoard() {
     printf("     |     |     \n");
     printf("  %c  |  %c  |  %c  \n", square[7], square[8], square[9]);
     printf("     |     |     \n");
+}
+
+void resetBoard() {
+	int i;
+    for (i = 1; i <= 9; i++) {
+        square[i] = '0' + i;
+    }
 }
